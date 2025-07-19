@@ -1,0 +1,508 @@
+/* ==========================================================================
+   Global Reset and Base Styles
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+    color: #1e293b;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+/* ==========================================================================
+   Containers
+   ========================================================================== */
+.container, .form-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    animation: fadeIn 0.7s ease-out;
+}
+
+.form-container {
+    max-width: 500px;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.header {
+    max-width: 900px;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header h1 {
+    font-size: 2rem;
+    color: #2563eb;
+    margin: 0 1rem 0.5rem;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+.title, .form-title, h1, h2 {
+    font-size: 2.2rem;
+    color: #2563eb;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.title::after, .form-title::after, h1::after, h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: #2563eb;
+    margin: 0.6rem auto;
+    border-radius: 2px;
+    animation: slideIn 0.5s ease-out;
+}
+
+.form-footer, .error-message, .success-message {
+    font-size: 1rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.error-message {
+    color: #dc2626;
+    background: #fee2e2;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border-left: 4px solid #dc2626;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.success-message {
+    color: #10b981;
+    background: #d1fae5;
+    padding: 0.8rem;
+    border-radius: 8px;
+    border-left: 4px solid #10b981;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+.link, .links a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.link:hover, .links a:hover {
+    color: #1e40af;
+    text-decoration: underline;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Form Styles
+   ========================================================================== */
+.form, .todo-form, .passwords-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1e293b;
+    margin-bottom: 0.4rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f8fafc;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+    background: #fff;
+}
+
+.form-input[type="file"] {
+    padding: 0.5rem;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+    padding: 0.9rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #2563eb;
+}
+
+.btn-primary:hover {
+    background: #1e40af;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+    background: #10b981;
+}
+
+.btn-secondary:hover {
+    background: #059669;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.btn-danger {
+    background: #dc2626;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+}
+
+.btn-warning {
+    background: #f59e0b;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
+}
+
+.btn-toggle {
+    background: #6b7280;
+}
+
+.btn-toggle:hover {
+    background: #4b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* Button Ripple Effect */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:hover::before {
+    width: 350px;
+    height: 350px;
+}
+
+/* ==========================================================================
+   Profile Photo Section
+   ========================================================================== */
+.profile-photo-section {
+    text-align: center;
+    margin: 2rem 0;
+    animation: fadeIn 0.7s ease-out;
+}
+
+.profile-photo {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   To-Do List and Saved Passwords Sections
+   ========================================================================== */
+.todos-section, .saved-passwords-section {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.7s ease-out;
+}
+
+.todo-list, .saved-passwords-list {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.todo-item, .password-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background 0.2s ease;
+}
+
+.todo-item:hover, .password-item:hover {
+    background: #f8fafc;
+}
+
+.todo-item.done .todo-title {
+    text-decoration: line-through;
+    color: #6b7280;
+}
+
+.todo-title {
+    flex-grow: 1;
+    font-weight: 500;
+    margin: 0 1rem;
+}
+
+.todo-description {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin: 0 1rem;
+}
+
+.password-item strong {
+    flex-grow: 1;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+
+.inline-form {
+    display: inline-block;
+}
+
+/* ==========================================================================
+   Admin Users Table
+   ========================================================================== */
+.users-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.7s ease-out;
+}
+
+.users-table th, .users-table td {
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.users-table th {
+    background: #f0f4f8;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.users-table tr {
+    transition: background 0.2s ease;
+}
+
+.users-table tr:hover {
+    background: #f8fafc;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        width: 0;
+    }
+    to {
+        width: 70px;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 768px) {
+    .container, .form-container, .todos-section, .saved-passwords-section, .users-table, .header {
+        margin: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .title, .form-title, h1, h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn, .form-input {
+        font-size: 0.95rem;
+    }
+
+    .links {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .links a {
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .todo-item, .password-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .users-table th, .users-table td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .profile-photo {
+        max-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title, .form-title, h1, h2 {
+        font-size: 1.6rem;
+    }
+
+    .form-footer, .error-message, .success-message {
+        font-size: 0.9rem;
+    }
+
+    .btn, .form-input {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
+
+    .profile-photo {
+        max-width: 100 cooperativepx;
+    }
+
+    .users-table {
+        font-size: 0.85rem;
+    }
+
+    .users-table th, .users-table td {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    .todo-title, .todo-description, .password-item strong {
+        margin: 0 0.5rem;
+    }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+:focus {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}
+
+.btn:focus, .form-input:focus {
+    outline: none;
+}
+
+a:focus, button:focus {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+}

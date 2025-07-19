@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - <%= user.username %></title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="page-home">
+  <header class="header">
+    <h1>Welcome, <%= user.username %></h1>
+    <a href="/profile/edit" class="btn btn-secondary">Edit Profile</a>
+    <% if (user.isAdmin) { %>
+      <a href="/admin/users" class="btn btn-warning">Admin Dashboard</a>
+    <% } %>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+  </header>
+
+  <section class="profile-photo-section">
+    <% if (user.profilePhoto) { %>
+      <img src="<%= user.profilePhoto || '/mypic.jpg' %>" alt="Profile Photo" class ="profile-photo" />
+    <% } else { %>
+      <p>No profile photo uploaded.</p>
+    <% } %>
+  </section>
+
+  <section class="todos-section">
+    <h2>Your To-Do List</h2>
+
+    <form action="/todo/add" method="POST" class="todo-form">
+      <input type="text" name="title" placeholder="New task title" class="form-input" required />
+      <input type="text" name="description" placeholder="Description (optional)" class="form-input" />
+      <button type="submit" class="btn btn-primary">Add Task</button>
+    </form>
+
+    <ul class="todo-list">
+      <% todos.forEach(todo => { %>
+        <li class="todo-item <%= todo.status === 'done' ? 'done' : '' %>">
+          <form action="/todo/<%= todo._id %>/toggle" method="POST" class="inline-form">
+            <button type="submit" class="btn btn-toggle">
+              <%= todo.status === 'done' ? 'Undo' : 'Done' %>
+            </button>
+          </form>
+          <span class="todo-title"><%= todo.title %></span>
+          <% if (todo.description) { %>
+            <span class="todo-description">- <%= todo.description %></span>
+          <% } %>
+          <form action="/todo/<%= todo._id %>/delete" method="POST" class="inline-form">
+            <button type="submit" class="btn btn-danger btn-small">Delete</button>
+          </form>
+        </li>
+      <% }) %>
+      <% if (todos.length === 0) { %>
+        <li>No tasks yet.</li>
+      <% } %>
+    </ul>
+  </section>
+
+  <section class="saved-passwords-section">
+    <h2>Your Saved Passwords</h2>
+
+    <form action="/passwords/add" method="POST" class="passwords-form">
+      <input type="text" name="title" placeholder="Website or Title" class="form-input" required />
+      <input type="text" name="password" placeholder="Password" class="form-input" required />
+      <button type="submit" class="btn btn-primary">Save Password</button>
+    </form>
+
+    <ul class="saved-passwords-list">
+      <% if (user.savedPasswords && user.savedPasswords.length > 0) { %>
+        <% user.savedPasswords.forEach(item => { %>
+          <li class="password-item">
+            <strong><%= item.title %></strong>: <%= item.password %>
+            <form action="/passwords/<%= item._id %>/delete" method="POST" class="inline-form">
+              <button type="submit" class="btn btn-danger btn-small">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li>No saved passwords yet.</li>
+      <% } %>
+    </ul>
+  </section>
+
+</body>
+</html>

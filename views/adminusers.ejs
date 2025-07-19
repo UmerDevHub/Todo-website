@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - Users</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body class="page-admin-users">
+  <header class="header">
+    <h1>Admin Dashboard - Users</h1>
+    <a href="/home" class="btn btn-secondary">Back to Home</a>
+    <a href="/logout" class="btn btn-danger">Logout</a>
+  </header>
+
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Is Admin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.username %></td>
+          <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
+          <td>
+            <form action="/admin/users/<%= user._id %>/delete" method="POST" onsubmit="return confirm('Delete this user?');">
+              <button type="submit" class="btn btn-danger btn-small">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  
+  "name": "sign-signup",
+  
+  "version": "1.0.0",
+  
+  "main": "index.js",
+  
+  "scripts": {
+  
+    
+  "start": "node index.js",
+  
+    
+  "test": "echo \"Error: no test specified\" && exit 1"
+  
+  },
+  
+  "keywords": [],
+  
+  "author": "",
+  
+  "license": "ISC",
+  
+  "description": "",
+  
+  "dependencies": {
+  
+    
+  "bcrypt": "^6.0.0",
+  
+    
+  "cloudinary": "^1.41.3",
+  
+    
+  "dotenv": "^17.2.0",
+  
+    
+  "ejs": "^3.1.10",
+  
+    
+  "express": "^5.1.0",
+  
+    
+  "express-session": "^1.18.2",
+  
+    
+  "mongoose": "^8.16.4",
+  
+    
+  "multer": "^2.0.2",
+  
+    
+  "multer-storage-cloudinary": "^4.0.0",
+  
+    
+  "nodemailer": "^7.0.5"
+  
+  }
+}
