@@ -5,83 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edit Profile - <%= user.username %></title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f0f2f5;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
     }
+
     .container {
       background: #fff;
-      padding: 20px;
-      max-width: 500px;
+      padding: 30px 25px;
+      max-width: 550px;
       width: 90%;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
     h1 {
       text-align: center;
       color: #333;
+      margin-bottom: 20px;
     }
+
     .form-label {
       display: block;
       margin-top: 15px;
-      margin-bottom: 5px;
-      color: #555;
-      font-weight: bold;
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 600;
     }
-    .form-input {
+
+    .form-input, input[type="file"] {
       width: 100%;
-      padding: 10px;
+      padding: 10px 12px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      box-sizing: border-box;
+      font-size: 14px;
     }
-    .btn {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
+
+    .error-message {
+      color: red;
       text-align: center;
-      text-decoration: none;
+      margin: 12px 0;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
       border-radius: 5px;
       font-weight: bold;
+      font-size: 14px;
       border: none;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
+
     .btn-primary {
       background-color: #007bff;
       color: white;
-      border: none;
     }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
     .btn-secondary {
       background-color: #6c757d;
       color: white;
       text-decoration: none;
-      display: inline-block;
-      margin-top: 10px;
       text-align: center;
     }
-    .error-message {
-      color: red;
-      text-align: center;
-      margin: 10px 0;
+    .btn-secondary:hover {
+      background-color: #545b62;
     }
-    input[type="file"] {
-      margin-top: 5px;
-    }
-    @media (max-width: 600px) {
-      .btn, .btn-secondary {
-        width: 100%;
-        box-sizing: border-box;
+
+    @media (max-width: 500px) {
+      .button-group {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container form-container">
+  <div class="container">
     <h1>Edit Profile</h1>
 
     <% if (error) { %>
@@ -104,10 +125,11 @@
       <label for="newPassword" class="form-label">New Password (leave blank if not changing)</label>
       <input type="password" id="newPassword" name="newPassword" class="form-input" />
 
-      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <div class="button-group">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="/home" class="btn btn-secondary">Back to Home</a>
+      </div>
     </form>
-
-    <a href="/home" class="btn btn-secondary">Back to Home</a>
   </div>
 </body>
 </html>
