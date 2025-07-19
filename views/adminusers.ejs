@@ -2,39 +2,260 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
   <title>Admin - Users</title>
+  <link rel="shortcut icon" href="/icons/admin.ico" type="image/x-icon" />
+  <!-- External CSS -->
   <link rel="stylesheet" href="/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  
+  <style>
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      line-height: 1.4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Header */
+    header.header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    header.header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #222;
+      user-select: none;
+    }
+    header.header h1 i {
+      color: #007bff;
+      font-size: 1.6rem;
+    }
+
+    /* Buttons */
+    .btn {
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+      font-size: 1rem;
+      border: 2px solid transparent;
+    }
+    .btn:focus-visible {
+      outline: 2px solid #0056b3;
+      outline-offset: 2px;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+      border-color: #6c757d;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: #5a6268;
+      border-color: #545b62;
+      box-shadow: 0 0 6px rgb(90 98 104 / 0.6);
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+      border-color: #dc3545;
+    }
+    .btn-danger:hover,
+    .btn-danger:focus {
+      background-color: #b02a37;
+      border-color: #a52834;
+      box-shadow: 0 0 6px rgb(176 42 55 / 0.7);
+    }
+    .btn-small {
+      padding: 5px 10px;
+      font-size: 0.9rem;
+    }
+
+    /* Table container with horizontal scroll on small screens */
+    .table-container {
+      overflow-x: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      background: white;
+    }
+
+    /* Table */
+    table.users-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 700px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    table.users-table th,
+    table.users-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    table.users-table th {
+      background-color: #007bff;
+      color: white;
+      font-weight: 600;
+      user-select: none;
+    }
+    table.users-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Icons inside table */
+    table.users-table td i {
+      margin-right: 6px;
+    }
+    table.users-table td .fa-check-circle {
+      color: #28a745;
+    }
+    table.users-table td .fa-times-circle {
+      color: #dc3545;
+    }
+
+    /* Form inside table cell */
+    form {
+      margin: 0;
+      display: inline;
+    }
+
+    /* Responsive for smaller devices */
+    @media (max-width: 768px) {
+      .table-container {
+        min-width: 100%;
+      }
+      table.users-table {
+        min-width: 600px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .table-container {
+        overflow-x: scroll;
+      }
+      table.users-table {
+        min-width: 0;
+        display: block;
+      }
+      table.users-table thead {
+        display: none;
+      }
+      table.users-table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: white;
+        padding: 12px;
+      }
+      table.users-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 12px;
+        border-bottom: 1px solid #eee;
+        white-space: normal;
+      }
+      table.users-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #007bff;
+        flex-basis: 45%;
+      }
+      table.users-table td:last-child {
+        border-bottom: 0;
+      }
+    }
+  </style>
 </head>
 <body class="page-admin-users">
-  <header class="header">
-    <h1>Admin Dashboard - Users</h1>
-    <a href="/home" class="btn btn-secondary">Back to Home</a>
-    <a href="/logout" class="btn btn-danger">Logout</a>
+  <header class="header" role="banner">
+    <h1><i class="fas fa-users-cog" aria-hidden="true"></i> Admin Dashboard - Users</h1>
+    <nav aria-label="Admin navigation">
+      <a href="/home" class="btn btn-secondary" role="button">
+        <i class="fas fa-home" aria-hidden="true"></i> Home
+      </a>
+      <a href="/logout" class="btn btn-danger" role="button">
+        <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout
+      </a>
+    </nav>
   </header>
 
-  <table class="users-table">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Is Admin</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% users.forEach(user => { %>
+  <main class="table-container" role="main">
+    <table class="users-table" aria-describedby="users-table-desc">
+      <caption id="users-table-desc" class="sr-only">Table listing all registered users</caption>
+      <thead>
         <tr>
-          <td><%= user.email %></td>
-          <td><%= user.username %></td>
-          <td><%= user.isAdmin ? 'Yes' : 'No' %></td>
-          <td>
-            <form action="/admin/users/<%= user._id %>/delete" method="POST" onsubmit="return confirm('Delete this user?');">
-              <button type="submit" class="btn btn-danger btn-small">Delete</button>
-            </form>
-          </td>
+          <th scope="col"><i class="fas fa-envelope" aria-hidden="true"></i> Email</th>
+          <th scope="col"><i class="fas fa-user" aria-hidden="true"></i> Username</th>
+          <th scope="col"><i class="fas fa-shield-alt" aria-hidden="true"></i> Is Admin</th>
+          <th scope="col"><i class="fas fa-cogs" aria-hidden="true"></i> Actions</th>
         </tr>
-      <% }) %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+          <tr>
+            <td data-label="Email"><%= user.email %></td>
+            <td data-label="Username"><%= user.username %></td>
+            <td data-label="Is Admin">
+              <% if(user.isAdmin) { %>
+                <i class="fas fa-check-circle" aria-label="Yes" title="Admin user"></i> Yes
+              <% } else { %>
+                <i class="fas fa-times-circle" aria-label="No" title="Not admin user"></i> No
+              <% } %>
+            </td>
+            <td data-label="Actions">
+              <form
+                action="/admin/users/<%= user._id %>/delete"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this user?');"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-danger btn-small"
+                  aria-label="Delete user <%= user.username %>"
+                >
+                  <i class="fas fa-trash-alt" aria-hidden="true"></i> Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
 </body>
 </html>

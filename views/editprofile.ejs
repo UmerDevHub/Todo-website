@@ -4,130 +4,334 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edit Profile - <%= user.username %></title>
+  <link rel="shortcut icon" href="/icons/edit.png" type="image/x-icon" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
   <style>
+    /* Reset and Base Styles */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f0f2f5;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 1.5rem;
+      color: #1f2937;
+      transition: background 0.5s ease;
     }
 
     .container {
-      background: #fff;
-      padding: 30px 25px;
-      max-width: 550px;
-      width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: rgba(255, 255, 255, 0.98);
+      padding: 2.5rem;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.8s ease-out;
     }
 
+    /* Form Title */
     h1 {
       text-align: center;
-      color: #333;
-      margin-bottom: 20px;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: linear-gradient(to right, #1e3a8a, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
+    h1 i {
+      font-size: 2rem;
+      color: #3b82f6;
+    }
+
+    /* Error Message */
+    .error-message {
+      color: #b91c1c;
+      background: #fef2f2;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-left: 4px solid #ef4444;
+      text-align: center;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    /* Form Labels and Inputs */
     .form-label {
       display: block;
-      margin-top: 15px;
-      margin-bottom: 6px;
-      color: #333;
+      text-align: left;
       font-weight: 600;
+      margin-bottom: 0.5rem;
+      margin-top: 1rem;
+      color: #1e3a8a;
+      font-size: 0.95rem;
     }
 
     .form-input, input[type="file"] {
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
+      padding: 0.85rem;
+      font-size: 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      background: #f9fafb;
+      transition: all 0.3s ease;
     }
 
-    .error-message {
-      color: red;
-      text-align: center;
-      margin: 12px 0;
+    .form-input:focus, input[type="file"]:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      background: white;
     }
 
+    .form-input::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Button Group */
     .button-group {
       display: flex;
       justify-content: space-between;
-      margin-top: 20px;
-      gap: 10px;
+      margin-top: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .btn {
       flex: 1;
-      padding: 12px;
-      text-align: center;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 14px;
+      padding: 0.85rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 0.5rem;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      user-select: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+
+    .btn:hover::after, .btn:focus::after {
+      width: 200%;
+      height: 200%;
     }
 
     .btn-primary {
-      background-color: #007bff;
-      color: white;
+      background: #3b82f6;
     }
-    .btn-primary:hover {
-      background-color: #0056b3;
+
+    .btn-primary:hover, .btn-primary:focus {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
 
     .btn-secondary {
-      background-color: #6c757d;
-      color: white;
-      text-decoration: none;
+      background: #6b7280;
       text-align: center;
     }
-    .btn-secondary:hover {
-      background-color: #545b62;
+
+    .btn-secondary:hover, .btn-secondary:focus {
+      background: #4b5563;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(75, 85, 99, 0.3);
+      text-decoration: none;
     }
 
-    @media (max-width: 500px) {
+    .btn i {
+      font-size: 1.2rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h1 i {
+        font-size: 1.6rem;
+      }
+
       .button-group {
         flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        width: 100%;
+        font-size: 1rem;
+        padding: 0.75rem;
+      }
+
+      .form-input, input[type="file"] {
+        font-size: 0.95rem;
+        padding: 0.75rem;
+      }
+
+      .form-label {
+        font-size: 0.9rem;
+      }
+
+      .error-message {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+        padding: 0.65rem;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Edit Profile</h1>
+  <div class="container" role="main" aria-label="Edit Profile Form">
+    <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
 
     <% if (error) { %>
-      <p class="error-message"><%= error %></p>
+      <p class="error-message" role="alert"><%= error %></p>
     <% } %>
 
-    <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+    <form action="/profile/edit" method="POST" enctype="multipart/form-data" novalidate>
       <label for="username" class="form-label">Username</label>
-      <input type="text" id="username" name="username" class="form-input" value="<%= user.username %>" required />
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-input"
+        value="<%= user.username %>"
+        required
+        aria-required="true"
+        aria-describedby="usernameHelp"
+        placeholder="Enter your username"
+      />
 
       <label for="email" class="form-label">Email</label>
-      <input type="email" id="email" name="email" class="form-input" value="<%= user.email %>" required />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-input"
+        value="<%= user.email %>"
+        required
+        aria-required="true"
+        placeholder="Enter your email"
+      />
 
       <label for="profilePhoto" class="form-label">Profile Photo</label>
-      <input type="file" name="profilePhoto" accept="image/*" />
+      <input
+        type="file"
+        id="profilePhoto"
+        name="profilePhoto"
+        accept="image/*"
+        aria-describedby="profilePhotoHelp"
+      />
 
       <label for="currentPassword" class="form-label">Current Password (required to save)</label>
-      <input type="password" id="currentPassword" name="currentPassword" class="form-input" required />
+      <input
+        type="password"
+        id="currentPassword"
+        name="currentPassword"
+        class="form-input"
+        required
+        aria-required="true"
+        autocomplete="current-password"
+        placeholder="Enter current password"
+      />
 
       <label for="newPassword" class="form-label">New Password (leave blank if not changing)</label>
-      <input type="password" id="newPassword" name="newPassword" class="form-input" />
+      <input
+        type="password"
+        id="newPassword"
+        name="newPassword"
+        class="form-input"
+        autocomplete="new-password"
+        placeholder="Enter new password"
+      />
 
       <div class="button-group">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="/home" class="btn btn-secondary">Back to Home</a>
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+        <a href="/home" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
       </div>
     </form>
   </div>
